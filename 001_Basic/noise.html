@@ -2,9 +2,20 @@
 
 <head>
   <script src="https://cdn.bootcss.com/p5.js/0.5.16/p5.min.js"></script>
+  <style>
+    #control-panel {
+      border: 1px solid black;
+      position: fixed;
+      top: 0;
+      right: 0;
+    }
+  </style>
 </head>
 
 <body>
+  <div id="control-panel">
+    <input type="range" min="0" max="0.01" step="0.001" value="0">
+  </div>
   <script>
     const canvasWidth = 800;
     const canvasHeight = 600;
@@ -37,7 +48,7 @@
     }
 
     function draw() {
-      drawNoiseCloud()
+      // drawNoiseCloud()
     }
   </script>
 </body>
