@@ -1,0 +1,45 @@
+<html>
+
+<head>
+  <script src="https://cdn.bootcss.com/p5.js/0.5.16/p5.min.js"></script>
+</head>
+
+<body>
+  <script>
+    const canvasWidth = 800;
+    const canvasHeight = 600;
+
+    function map(value, min1, max1, min2, max2) {
+      /*
+        value / (max1 - min1) = value_unknow / (max2 - min2)
+        value_unknow = (max2 - min) * value  / (max1 - min1)
+      */
+      return (max2 - min) * value / (max1 - min1)
+    }
+
+    function drawNoiseCloud() {
+      loadPixels()
+      let xoff = 0
+      for (let x = 0; x < canvasWidth; x++) {
+        let yoff = 0
+        for (let y = 0; y < canvasHeight; y++) {
+          set(x, y, color(map(noise((xoff), (yoff)), 0, 1, 0, 255)));
+          yoff += + 0.01;
+        }
+        xoff += 0.01
+      }
+      updatePixels()
+    }
+
+    function setup() {
+      createCanvas(canvasWidth, canvasHeight)
+      drawNoiseCloud();
+    }
+
+    function draw() {
+      drawNoiseCloud()
+    }
+  </script>
+</body>
+
+</html>
