@@ -1,0 +1,89 @@
+<html>
+
+<head>
+  <script src="https://cdn.bootcss.com/p5.js/0.5.16/p5.min.js"></script>
+  <style>
+    #control-panel {
+      border: 1px solid black;
+      position: fixed;
+      top: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="control-panel">
+    <form>
+      <label for="control-panel-mean">Mean</label>
+      <input id="control-panel-mean" type="range" min="0" max="50" step="1" value="20">
+      <span id="control-panel-mean-label">20</span>
+
+      <label for="control-panel-sd">Sd</label>
+      <input id="control-panel-sd" type="range" min="0" max="50" step="1" value="0">
+      <span id="control-panel-sd-label">0</span>
+    </form>
+  </div>
+  <script>
+    const canvasWidth = 800;
+    const canvasHeight = 600;
+    let dirtyFlag = false
+
+    let mean = 20
+    let oldMean = mean
+
+    let sd = 0
+    let oldSd = sd
+
+    /* ===== Control Begin ===== */
+    const meanControlller = document.querySelector('#control-panel-mean')
+    const meanLabel = document.querySelector('#control-panel-mean-label')
+
+    const sdControlller = document.querySelector('#control-panel-sd')
+    const sdLabel = document.querySelector('#control-panel-sd-label')
+
+    meanControlller.addEventListener('input', (event) => {
+      const value = parseInt(event.target.value, 10)
+      oldMean = mean
+      mean = value;
+      meanLabel.innerHTML = value
+      dirtyFlag = false;
+    })
+
+    sdControlller.addEventListener('input', (event) => {
+      const value = parseInt(event.target.value, 10)
+      oldSd = sd
+      sd = value;
+      sdLabel.innerHTML = value
+      dirtyFlag = false;
+    })
+    /* ===== Control End ===== */
+
+    function drawLines() {
+      background('gray')
+      stroke('yellow')
+      const lineArr = []
+      for (let x = 0; x < canvasWidth; x++) {
+        const lineLength = Math.abs(randomGaussian(mean, sd))
+        lineArr.push(lineLength)
+      }
+      lineArr.forEach((lineLength, x) => {
+        line(x, canvasHeight / 2, x, canvasHeight / 2 - lineLength)
+      })
+    }
+
+    function setup() {
+      createCanvas(canvasWidth, canvasHeight)
+      drawLines()
+    }
+
+    function draw() {
+      if ((oldSd !== sd || oldMean !== mean) && !dirtyFlag) {
+        dirtyFlag = true
+        drawLines()
+      }
+    }
+  </script>
+</body>
+
+</html>
