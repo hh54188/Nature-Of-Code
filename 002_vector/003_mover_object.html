@@ -1,0 +1,81 @@
+<html>
+
+<head>
+  <script src="https://cdn.bootcss.com/p5.js/0.5.16/p5.min.js"></script>
+  <script src="https://cdn.bootcss.com/victor/1.1.0/victor.min.js"></script>
+  <script src="../lib/victor-util.js"></script>
+</head>
+
+<body>
+  <script>
+    const canvasWidth = 800;
+    const canvasHeight = 600;
+
+    function Mover(location, velocity, acceleration) {
+      this.location = location;
+      this.velocity = velocity;
+      this.acceleration = acceleration;
+    }
+
+    Mover.prototype.update = function () {
+      this.velocity = this.velocity.add(this.acceleration)
+      const limit = 5
+      this.velocity.limitDimension(limit)
+      this.location = this.location.add(this.velocity)
+      return this
+    }
+
+    Mover.prototype.display = function () {
+      stroke(0)
+      fill(175)
+      ellipse(this.location.x, this.location.y, 16, 16)
+      return this
+    }
+
+    Mover.prototype.checkEdge = function () {
+      // 碰到边缘的方案一：
+      // 从另一边的边缘出来
+      if (this.location.x > canvasWidth) {
+        this.location.x = 0
+      }
+      if (this.location.x < 0) {
+        this.location.x = canvasWidth
+      }
+      if (this.location.y > canvasHeight) {
+        this.location.y = 0
+      }
+      if (this.location.y < 0) {
+        this.location.y = canvasHeight
+      }
+
+      // 碰到边缘的方案二：
+      // 反弹
+      // if (this.location.x > canvasWidth || this.location.x < 0) {
+      //   this.velocity.x = this.velocity.x * (-1)
+      // }
+
+      // if (this.location.y > canvasHeight || this.location.y < 0) {
+      //   this.velocity.y = this.velocity.y * (-1)
+      // }
+      return this
+    }
+
+    const mover = new Mover(
+      new Victor(canvasWidth / 2, canvasHeight / 2),
+      new Victor(1, 2),
+      new Victor(0.1, 0.1)
+    )
+
+    function setup() {
+      createCanvas(canvasWidth, canvasHeight)
+      background('gray')
+    }
+
+    function draw() {
+      background('gray')
+      mover.update().checkEdge().display()
+    }
+  </script>
+</body>
+
+</html>

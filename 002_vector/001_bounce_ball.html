@@ -1,0 +1,40 @@
+<html>
+
+<head>
+  <script src="https://cdn.bootcss.com/p5.js/0.5.16/p5.min.js"></script>
+  <script src="https://cdn.bootcss.com/victor/1.1.0/victor.min.js"></script>
+</head>
+
+<body>
+  <script>
+    const canvasWidth = 800
+    const canvasHeight = 600
+
+    let ballLocation = new Victor(100, 100)
+    const velocity = new Victor(2, 2)
+
+    function setup() {
+      createCanvas(canvasWidth, canvasHeight)
+      smooth()
+      background('gray')
+    }
+
+    function draw() {
+      background('gray')
+      ballLocation = ballLocation.add(velocity)
+      if (ballLocation.x > canvasWidth || ballLocation.x < 0) {
+        velocity.x = velocity.x * (-1)
+      }
+
+      if (ballLocation.y > canvasHeight || ballLocation.y < 0) {
+        velocity.y = velocity.y * (-1)
+      }
+
+      stroke(0)
+      fill(175)
+      ellipse(ballLocation.x, ballLocation.y, 10, 10)
+    }
+  </script>
+</body>
+
+</html>

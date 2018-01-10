@@ -1,0 +1,36 @@
+<html>
+
+<head>
+  <script src="https://cdn.bootcss.com/p5.js/0.5.16/p5.min.js"></script>
+  <script src="https://cdn.bootcss.com/victor/1.1.0/victor.min.js"></script>
+  <script src="../lib/victor-util.js"></script>
+</head>
+
+<body>
+  <script>
+    const canvasWidth = 800;
+    const canvasHeight = 600;
+
+    function setup() {
+      createCanvas(canvasWidth, canvasHeight)
+      background('gray')
+    }
+
+    function draw() {
+      background('gray')
+      stroke(0)
+
+      const mousePosition = new Victor(mouseX, mouseY)
+      const centerPosition = new Victor(canvasWidth / 2, canvasHeight / 2)
+      // 向量 u - 向量 v 的结果是从 向量 u 到 向量 v 的向量
+      const subsctactPosision = mousePosition.subtract(centerPosition)
+      const multiPosition = subsctactPosision.multi(0.5)
+
+      translate(canvasWidth / 2, canvasHeight / 2)
+
+      line(0, 0, multiPosition.x, multiPosition.y)
+    }
+  </script>
+</body>
+
+</html>
