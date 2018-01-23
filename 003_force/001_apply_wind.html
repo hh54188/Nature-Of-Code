@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <script src="https://cdn.bootcss.com/p5.js/0.5.16/p5.min.js"></script>
+  <script src="https://cdn.bootcss.com/victor/1.1.0/victor.min.js"></script>
+  <script src="../lib/victor-util.js"></script>
+</head>
+
+<body>
+  <script>
+    const canvasWidth = 800;
+    const canvasHeight = 600;
+
+    const DEFAULT_VICTOR = new Victor(0, 0)
+
+    function Mover(location = DEFAULT_VICTOR, velocity = DEFAULT_VICTOR, acceleration = DEFAULT_VICTOR) {
+      this.location = location;
+      this.velocity = velocity;
+      this.acceleration = acceleration
+    }
+
+    Mover.prototype.update = function () {
+      this.velocity = this.velocity.add(this.acceleration)
+      this.location = this.location.add(this.velocity)
+      this.acceleration.multiply(new Victor(0, 0))
+      return this
+    }
+
+    Mover.prototype.display = function () {
+      stroke(0)
+      fill(175)
+      ellipse(this.location.x, this.location.y, 16, 16)
+      return this
+    }
+
+    Mover.prototype.applyForce = function (force) {
+      this.acceleration = force
+    }
+
+    const force = new Victor(0, 0.1)
+    const mover = new Mover(new Victor(20, 20), force)
+
+    function setup() {
+      createCanvas(canvasWidth, canvasHeight)
+      background('gray')
+    }
+
+    function draw() {
+      background('gray')
+      mover.update()
+      mover.display()
+
+      if (mouseIsPressed) {
+        mover.applyForce(new Victor(0.5, 0))
+      }
+    }
+
+  </script>
+</body>
+
+</html>

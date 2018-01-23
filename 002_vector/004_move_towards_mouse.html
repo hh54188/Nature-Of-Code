@@ -36,8 +36,6 @@
     }
 
     Mover.prototype.checkEdge = function () {
-      // 碰到边缘的方案一：
-      // 从另一边的边缘出来
       if (this.location.x > canvasWidth) {
         this.location.x = 0
       }
@@ -50,16 +48,6 @@
       if (this.location.y < 0) {
         this.location.y = canvasHeight
       }
-
-      // 碰到边缘的方案二：
-      // 反弹
-      // if (this.location.x > canvasWidth || this.location.x < 0) {
-      //   this.velocity.x = this.velocity.x * (-1)
-      // }
-
-      // if (this.location.y > canvasHeight || this.location.y < 0) {
-      //   this.velocity.y = this.velocity.y * (-1)
-      // }
       return this
     }
 
